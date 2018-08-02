@@ -5,12 +5,13 @@
 \title{Building and Applying an Absolute Risk Model:  Compute Risk over Interval Split in Two Parts}
 \usage{
 computeAbsoluteRiskSplitInterval(apply.age.start, apply.age.interval.length, 
-      apply.cov.profile, model.formula, model.disease.incidence.rates, model.log.RR, 
-      model.ref.dataset, model.ref.dataset.weights=NULL, model.cov.info, use.c.code=1, 
-      model.competing.incidence.rates=NULL, return.lp=FALSE, apply.snp.profile=NULL, 
-      model.snp.info=NULL, model.bin.fh.name=NULL, cut.time=NULL, 
-      apply.cov.profile.2=NULL, model.formula.2=NULL, model.log.RR.2=NULL, 
-      model.ref.dataset.2=NULL, model.ref.dataset.weights.2=NULL, model.cov.info.2=NULL, 
+      apply.cov.profile, model.formula, model.disease.incidence.rates, 
+      model.log.RR, model.ref.dataset, model.ref.dataset.weights=NULL, 
+      model.cov.info, use.c.code=1, model.competing.incidence.rates=NULL, 
+      return.lp=FALSE, apply.snp.profile=NULL, model.snp.info=NULL, 
+      model.bin.fh.name=NULL, cut.time=NULL, apply.cov.profile.2=NULL, 
+      model.formula.2=NULL, model.log.RR.2=NULL, model.ref.dataset.2=NULL, 
+      model.ref.dataset.weights.2=NULL, model.cov.info.2=NULL, 
       model.bin.fh.name.2=NULL, n.imp=5, return.refs.risk=FALSE)
 }
 \arguments{
@@ -107,21 +108,21 @@ data(bc_data, package="iCARE")
 
 form <- caco ~ famhist + as.factor(parity)
 results <- computeAbsoluteRiskSplitInterval(model.formula=form, 
-                                         cut.time = 50,
-                                         model.cov.info       = bc_model_cov_info,
-                                         model.snp.info       = bc_15_snps,
-                                         model.log.RR         = bc_model_log_or,
-                                         model.log.RR.2       = bc_model_log_or_post_50,
-                                         model.ref.dataset    = ref_cov_dat,
-                                         model.ref.dataset.2  = ref_cov_dat_post_50,
-                                         model.disease.incidence.rates   = bc_inc,
-                                         model.competing.incidence.rates = mort_inc, 
-                                         model.bin.fh.name = "famhist",
-                                         apply.age.start    = 30, 
-                                         apply.age.interval.length = 40,
-                                         apply.cov.profile  = new_cov_prof,
-                                         apply.snp.profile  = new_snp_prof, 
-                                         return.refs.risk   = TRUE)
+                              cut.time = 50,
+                              model.cov.info       = bc_model_cov_info,
+                              model.snp.info       = bc_15_snps,
+                              model.log.RR         = bc_model_log_or,
+                              model.log.RR.2       = bc_model_log_or_post_50,
+                              model.ref.dataset    = ref_cov_dat,
+                              model.ref.dataset.2  = ref_cov_dat_post_50,
+                              model.disease.incidence.rates   = bc_inc,
+                              model.competing.incidence.rates = mort_inc, 
+                              model.bin.fh.name = "famhist",
+                              apply.age.start    = 30, 
+                              apply.age.interval.length = 40,
+                              apply.cov.profile  = new_cov_prof,
+                              apply.snp.profile  = new_snp_prof, 
+                              return.refs.risk   = TRUE)
 summary(results$risk)
 plot(density(results$risk, na.rm=TRUE))
 boxplot(results$risk ~ new_cov_prof$famhist, na.rm=TRUE)

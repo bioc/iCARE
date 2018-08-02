@@ -85,19 +85,19 @@ or update models rapidly based on new risk factors or tailor models to different
 }
 \examples{
 data(bc_data, package="iCARE")
-results = computeAbsoluteRisk(model.formula     = caco ~ famhist + as.factor(parity), 
-                                         model.cov.info    = bc_model_cov_info,
-                                         model.snp.info    = bc_15_snps,
-                                         model.log.RR      = bc_model_log_or,
-                                         model.ref.dataset = ref_cov_dat,
-                                         model.disease.incidence.rates   = bc_inc,
-                                         model.competing.incidence.rates = mort_inc, 
-                                         model.bin.fh.name = "famhist",
-                                         apply.age.start    = 50, 
-                                         apply.age.interval.length = 30,
-                                         apply.cov.profile  = new_cov_prof,
-                                         apply.snp.profile  = new_snp_prof, 
-                                         return.refs.risk   = TRUE)
+results = computeAbsoluteRisk(model.formula= caco ~ famhist + as.factor(parity), 
+                                 model.cov.info    = bc_model_cov_info,
+                                 model.snp.info    = bc_15_snps,
+                                 model.log.RR      = bc_model_log_or,
+                                 model.ref.dataset = ref_cov_dat,
+                                 model.disease.incidence.rates   = bc_inc,
+                                 model.competing.incidence.rates = mort_inc, 
+                                 model.bin.fh.name = "famhist",
+                                 apply.age.start    = 50, 
+                                 apply.age.interval.length = 30,
+                                 apply.cov.profile  = new_cov_prof,
+                                 apply.snp.profile  = new_snp_prof, 
+                                 return.refs.risk   = TRUE)
 summary(results$risk)
 plot(density(results$risk, na.rm=TRUE))
 boxplot(results$risk ~ new_cov_prof$famhist, na.rm=TRUE)

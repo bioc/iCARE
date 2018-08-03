@@ -674,11 +674,7 @@ int nsub, age_new, age_int;
       j++;
     } 
   }
-  if (j) {
-    ret = ret;
-  } else {
-    ret = DOUBLE_MISS;
-  }
+  if (!j) ret = DOUBLE_MISS;
 
   return(ret);
 

@@ -124,10 +124,9 @@ This function is used to validate absolute risk models.
 
 data(bc_data, package="iCARE")
 validation.cohort.data$inclusion = 0
-tmp = match(as.character(validation.cohort.data$id), 
-            validation.nested.case.control.data$id)
-tmp = tmp[!is.na(tmp)]
-validation.cohort.data$inclusion[tmp] = 1
+subjects_included = intersect(validation.cohort.data$id, 
+                              validation.nested.case.control.data$id)
+validation.cohort.data$inclusion[subjects_included] = 1
 
 validation.cohort.data$observed.followup = validation.cohort.data$study.exit.age - 
   validation.cohort.data$study.entry.age

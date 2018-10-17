@@ -123,8 +123,8 @@ results <- computeAbsoluteRiskSplitInterval(model.formula=form,
                               apply.cov.profile  = new_cov_prof,
                               apply.snp.profile  = new_snp_prof, 
                               return.refs.risk   = TRUE)
-summary(results$risk)
-plot(density(results$risk, na.rm=TRUE))
+summary(results)
+plot(results)
 boxplot(results$risk ~ new_cov_prof$famhist, na.rm=TRUE)
 }
 

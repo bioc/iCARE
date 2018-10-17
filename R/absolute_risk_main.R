@@ -156,6 +156,8 @@ computeAbsoluteRisk <- function(model.formula = NULL, model.cov.info = NULL,
   if(return.refs.risk) result$refs.risk <- get_refs_risk(ref_pop, apply.age.start, 
                          apply.age.interval.length, lambda_0, beta_est, 
                       model.competing.incidence.rates, handle.snps, n.imp )[[1]]
+  class(result) <- "icare"
+
   result
 }
 
@@ -266,6 +268,7 @@ computeAbsoluteRiskSplitInterval <- function(apply.age.start, apply.age.interval
   else{  # just run standard function
     result = computeAbsoluteRisk(apply.age.start=apply.age.start, apply.age.interval.length=apply.age.interval.length, apply.cov.profile=apply.cov.profile , model.formula=model.formula, model.disease.incidence.rates=model.disease.incidence.rates, model.log.RR=model.log.RR, model.ref.dataset=model.ref.dataset, model.ref.dataset.weights=model.ref.dataset.weights, model.cov.info=model.cov.info, use.c.code=use.c.code, model.competing.incidence.rates=model.competing.incidence.rates, return.lp=return.lp, apply.snp.profile = apply.snp.profile, model.snp.info = model.snp.info, model.bin.fh.name = model.bin.fh.name, n.imp = n.imp)
   }
+  class(result) <- "icareSplit"
 
   result
 }

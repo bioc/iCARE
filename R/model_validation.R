@@ -541,7 +541,7 @@ ModelValidation = function(study.data,
                      p.value = PVAL_absrisk, method = METHOD, 
                      data.name = DNAME),class = "htest")
   
-  cat("\n")
+  #cat("\n")
   
   DNAME <- paste(deparse(substitute(observed.frequency)),
                  deparse(substitute(expected.frequency)), 
@@ -555,47 +555,47 @@ ModelValidation = function(study.data,
                      p.value = PVAL_logRR, method = METHOD, data.name = DNAME), 
                  class = "htest")
   
-  cat("\n")
+  #cat("\n")
   
-  print(paste("Dataset: ",dataset))
-  print(paste("Model Name: ",model.name))
-  if(is.null(model.formula)){
-    print("Model formula: Likely an additive SNP-only model")
-  } else {
-  print(paste("Model Formula:",mf[2],mf[1],mf[3]))
-  }
-  print(paste("Risk Prediction Interval:",timeframe))
-  cat("\n")
-  print(paste("Number of study subjects: "
-                                 ,length(observed.outcome)))
-  cat("\n")
-  print(paste("Number of cases: ",sum(observed.outcome)))
-  cat("\n")
-  print(paste("Follow-up time (years) [mean,range]: [",
-                      round(mean(followup),3),", (",
-                      round(range(followup)[1],3),",",
-                      round(range(followup)[2],3),")"," ]"))
-  cat("\n")
-  print(paste("Baseline age (years) [mean,range]: [", 
-              round(mean(study.entry.age),3),", (",
-              round(range(study.entry.age)[1],3),",",
-              round(range(study.entry.age)[2],3),")"," ]"))
-  cat("\n")
-  print("Absolute Risk Calibration")
-  print(h1)
-  cat("\n")
-  print("Relative Risk Calibration")
-  print(h2)
-  cat("\n")
-  print("Model Discrimination")
-  print(paste("Estimate of AUC:",round(auc,3)))
-  print(paste("95% CI of AUC: (",round(lower.limit.auc,3),",",
-              round(upper.limit.auc,3),")"))
-  cat("\n")
-  print("Overall Expected to Observed Ratio")
-  print(paste("Estimate:",round(exp_by_obs,3)))
-  print(paste("95% CI:","(",round(CI_exp_by_obs[1],3),
-              ",",round(CI_exp_by_obs[2],3),")"))
+  #print(paste("Dataset: ",dataset))
+  #print(paste("Model Name: ",model.name))
+  #if(is.null(model.formula)){
+  #  print("Model formula: Likely an additive SNP-only model")
+  #} else {
+  #print(paste("Model Formula:",mf[2],mf[1],mf[3]))
+  #}
+  #print(paste("Risk Prediction Interval:",timeframe))
+  #cat("\n")
+  #print(paste("Number of study subjects: "
+  #                               ,length(observed.outcome)))
+  #cat("\n")
+  #print(paste("Number of cases: ",sum(observed.outcome)))
+  #cat("\n")
+  #print(paste("Follow-up time (years) [mean,range]: [",
+  #                    round(mean(followup),3),", (",
+  #                    round(range(followup)[1],3),",",
+  #                    round(range(followup)[2],3),")"," ]"))
+  #cat("\n")
+  #print(paste("Baseline age (years) [mean,range]: [", 
+  #            round(mean(study.entry.age),3),", (",
+  #            round(range(study.entry.age)[1],3),",",
+  #            round(range(study.entry.age)[2],3),")"," ]"))
+  #cat("\n")
+  #print("Absolute Risk Calibration")
+  #print(h1)
+  #cat("\n")
+  #print("Relative Risk Calibration")
+  #print(h2)
+  #cat("\n")
+  #print("Model Discrimination")
+  #print(paste("Estimate of AUC:",round(auc,3)))
+  #print(paste("95% CI of AUC: (",round(lower.limit.auc,3),",",
+  #            round(upper.limit.auc,3),")"))
+  #cat("\n")
+  #print("Overall Expected to Observed Ratio")
+  #print(paste("Estimate:",round(exp_by_obs,3)))
+  #print(paste("95% CI:","(",round(CI_exp_by_obs[1],3),
+  #            ",",round(CI_exp_by_obs[2],3),")"))
   
   
   results.cat = data.frame(cbind(levels(linear.predictor.cat),
@@ -610,7 +610,7 @@ ModelValidation = function(study.data,
                          "Observed_Relative_Risk","Predicted_Relative_Risk",
                          "CI_Relative_Risk_Lower","CI_Relative_Risk_Upper")
   
-  return(list(Subject_Specific_Observed_Outcome = observed.outcome,
+  ret <- list(Subject_Specific_Observed_Outcome = observed.outcome,
               Risk_Prediction_Interval = timeframe,
               Adjusted_Followup = followup, 
               Subject_Specific_Predicted_Absolute_Risk = predicted.risk, 
@@ -633,7 +633,12 @@ ModelValidation = function(study.data,
               AUC = auc, Variance_AUC = var_auc, 
               CI_AUC = c(lower.limit.auc,upper.limit.auc),
               Overall_Expected_to_Observed_Ratio = exp_by_obs,
-              CI_Overall_Expected_to_Observed_Ratio = CI_exp_by_obs))
+              CI_Overall_Expected_to_Observed_Ratio = CI_exp_by_obs,
+              input.args=list(model.formula=model.formula, study.data=study.data,
+                 dataset=dataset, model.name=model.name))
+  
+  class(ret) <- "icareValid"
+  ret
 }
 
 weighted.quantcut = function (x, weights = NULL, q = 10, na.rm = TRUE, ...){

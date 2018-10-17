@@ -158,7 +158,7 @@ risk.model = list(model.formula = bc_model_formula,
                   n.imp = 5, use.c.code = 1, return.lp = TRUE,
                   return.refs.risk = TRUE)
 
-output = ModelValidation(study.data = data,
+ModelValidation(study.data = data,
                           total.followup.validation = TRUE,
                            predicted.risk.interval = NULL,
                            iCARE.model.object = risk.model,

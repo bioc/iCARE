@@ -111,4 +111,139 @@ package_results <- function(final_risks, Z_new, covs_in_model, handle.snps, appl
   result
 }
 
+# S3 methods
+summary.icare <- function(object, ...) {
+
+  ret <- summary(object$risk, ...)
+  ret
+
+} # END: summary.icare
+
+plot.icare <- function(x, ...) {
+
+  plot(density(x$risk, na.rm=TRUE), ...)
+  NULL
+
+} # END: plot.icare
+
+print.icare <- function(x, ...) {
+
+  y   <- x$details
+  nc  <- ncol(y)
+  if (nc > 4) {
+    cols <- c(1:3, nc-1, nc)
+  } else {
+    cols <- 1:nc
+  }
+  y <- y[, cols, drop=FALSE]
+  rownames(y) <- NULL
+  print(y)
+  invisible(x)
+
+} # END: print.icare
+
+summary.icareSplit <- function(object, ...) {
+
+  ret <- summary(object$risk, ...)
+  colnames(ret) <- "Risk_Estimate"
+  ret
+
+} # END: summary.icareSplit
+
+plot.icareSplit <- function(x, ...) {
+
+  plot(density(x$risk, na.rm=TRUE), ...)
+  NULL
+
+} # END: plot.icareSplit
+
+print.icareSplit <- function(x, ...) {
+
+  y   <- x$details
+  cx  <- colnames(y)
+  cx[1:3] <- c("Int_Start", "Cut_Age", "Int_End")
+  cx[length(cx)] <- "Risk_Estimate"
+  tmp <- duplicated(cx)
+  if (any(tmp)) {
+    cx <- cx[!tmp]
+    y  <- y[,!tmp, drop=FALSE]
+  }
+  colnames(y) <- cx
+  rownames(y) <- NULL
+  print(y)
+  invisible(x)
+
+} # END: print.icareSplit
+
+print.icareValid <- function(x, ...) {
+
+  args     <- x$input.args
+  mformula <- args[["model.formula", exact=TRUE]]
+  mf       <- paste(mformula)
   
+  cat("\n")
+  cat(paste("Dataset: ", args$dataset, "\n", sep=""))
+  cat(paste("Model Name: ", args$model.name, "\n", sep=""))
+  if(is.null(mformula)){
+    cat("Model formula: Likely an additive SNP-only model\n")
+  } else {
+    cat(paste("Model Formula: ",mf[2],mf[1],mf[3], "\n", sep=" "))
+  }
+  timeframe <- x$Risk_Prediction_Interval
+  cat(paste("Risk Prediction Interval: ",timeframe, "\n", sep=""))
+  #cat("\n")
+  observed.outcome <- x$Subject_Specific_Observed_Outcome
+  cat(paste("Number of study subjects: "
+                                 ,length(observed.outcome), "\n", sep=""))
+  #cat("\n")
+  cat(paste("Number of cases: ",sum(observed.outcome), "\n", sep=""))
+  #cat("\n")
+  followup <- x$Adjusted_Followup
+  cat(paste("Follow-up time (years) [mean,range]: [",
+                      round(mean(followup),3),", (",
+                      round(range(followup)[1],3),",",
+                      round(range(followup)[2],3),")","]\n", sep=""))
+  #cat("\n")
+  study.entry.age <- args$study.data$study.entry.age
+  cat(paste("Baseline age (years) [mean,range]: [", 
+              round(mean(study.entry.age),3),", (",
+              round(range(study.entry.age)[1],3),",",
+              round(range(study.entry.age)[2],3),")","]\n", sep=""))
+  cat("\n")
+  cat("Absolute Risk Calibration")
+  print(x$Hosmer_Lemeshow_Results)
+  #cat("\n")
+  cat("Relative Risk Calibration")
+  print(x$RR_test_result)
+  #cat("\n")
+  cat("Model Discrimination\n")
+  cat(paste("Estimate of AUC: ", round(x$AUC,3), "\n", sep=""))
+  y <- x$CI_AUC
+  cat(paste("95% CI of AUC: (", round(y[1],3), ",", round(y[2],3), ")\n", sep=""))
+  cat("\n")
+  cat("Overall Expected to Observed Ratio\n")
+  exp_by_obs <- x$Overall_Expected_to_Observed_Ratio 
+  cat(paste("Estimate: ",round(exp_by_obs,3), "\n", sep=""))
+  CI_exp_by_obs <- x$CI_Overall_Expected_to_Observed_Ratio
+  cat(paste("95% CI: ", "(", round(CI_exp_by_obs[1],3),
+              ",", round(CI_exp_by_obs[2],3) ,")\n", sep=""))
+
+
+  invisible(x)
+
+} # END: print.icareValid
+
+plot.icareValid <- function(x, ...) {
+
+  args <- x$input.args
+  plotModelValidation(args$study.data, x,
+                                 dataset = args$dataset,
+                                 model.name = args$model.name,
+                                 ...) 
+  
+  NULL
+
+} # END: plot.icareValid
+
+
+

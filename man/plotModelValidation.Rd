@@ -1,5 +1,6 @@
 \name{plotModelValidation}
 \alias{plotModelValidation}
+\alias{plot}
 \title{Model Validation Plot}
 \usage{
 plotModelValidation(study.data, validation.results,
@@ -110,8 +111,7 @@ output = ModelValidation(study.data = data,
                            iCARE.model.object = risk.model,
                            number.of.percentiles = 10)
 
-plotModelValidation(study.data = data, 
-                      validation.results = output)
+plot(output)
 
 }
 

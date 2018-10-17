@@ -98,8 +98,8 @@ results = computeAbsoluteRisk(model.formula= caco ~ famhist + as.factor(parity),
                                  apply.cov.profile  = new_cov_prof,
                                  apply.snp.profile  = new_snp_prof, 
                                  return.refs.risk   = TRUE)
-summary(results$risk)
-plot(density(results$risk, na.rm=TRUE))
+summary(results)
+plot(results, main="Risk")
 boxplot(results$risk ~ new_cov_prof$famhist, na.rm=TRUE)
 }
 

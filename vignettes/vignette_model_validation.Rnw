@@ -9,12 +9,12 @@
 \title{iCARE (Individualized Coherent Absolute Risk Estimation) Package}
 \maketitle
 
-Install the iCARE package 
-<<start>>=
-if (!requireNamespace("BiocManager", quietly=TRUE))
-    install.packages("BiocManager")
-BiocManager::install("iCARE", version = "devel")
-@
+%Install the iCARE package 
+%<<start>>=
+%if (!requireNamespace("BiocManager", quietly=TRUE))
+%    install.packages("BiocManager")
+%BiocManager::install("iCARE", version = "devel")
+%@
 
 Load the iCARE library
 <<start>>=

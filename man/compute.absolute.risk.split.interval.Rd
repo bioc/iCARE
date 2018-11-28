@@ -106,11 +106,10 @@ The software gives users the flexibility to change or update models rapidly base
 \examples{
 data(bc_data, package="iCARE")
 
-form <- caco ~ famhist + as.factor(parity)
-results <- computeAbsoluteRiskSplitInterval(model.formula=form, 
+results <- computeAbsoluteRiskSplitInterval(model.formula=bc_model_formula, 
                               cut.time = 50,
                               model.cov.info       = bc_model_cov_info,
-                              model.snp.info       = bc_15_snps,
+                              model.snp.info       = bc_72_snps,
                               model.log.RR         = bc_model_log_or,
                               model.log.RR.2       = bc_model_log_or_post_50,
                               model.ref.dataset    = ref_cov_dat,

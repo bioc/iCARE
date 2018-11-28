@@ -141,27 +141,31 @@ validation.nested.case.control.data$sampling.weights =
 
 set.seed(50)
 
-bc_model_formula = observed.outcome ~ famhist + as.factor(parity)
 data = validation.nested.case.control.data
 
-risk.model = list(model.formula = bc_model_formula,
-                  model.cov.info = bc_model_cov_info,
-                  model.snp.info = bc_15_snps,
-                  model.log.RR = bc_model_log_or,
-                  model.ref.dataset = ref_cov_dat,
+snpDat     = bc_72_snps
+form       = diagnosis ~ famhist + as.factor(parity)
+info       = list(bc_model_cov_info[[1]], bc_model_cov_info[[3]])
+vars       = all.vars(form)[-1]
+risk.model = list(model.formula = form,
+                  model.cov.info = info,
+                  model.snp.info = snpDat,
+                  model.log.RR = bc_model_log_or[c(1, 8:11)],
+                  model.ref.dataset = ref_cov_dat[, vars],
                   model.ref.dataset.weights = NULL,
                   model.disease.incidence.rates = bc_inc,
                   model.competing.incidence.rates = mort_inc,
                   model.bin.fh.name = "famhist",
-                  apply.cov.profile = data[,all.vars(bc_model_formula)[-1]],
-                  apply.snp.profile = data[,bc_15_snps$snp.name],
+                  apply.cov.profile = data[,vars],
+                  apply.snp.profile = data[,snpDat$snp.name],
                   n.imp = 5, use.c.code = 1, return.lp = TRUE,
                   return.refs.risk = TRUE)
 
-ModelValidation(study.data = data,
-                          total.followup.validation = TRUE,
-                           predicted.risk.interval = NULL,
-                           iCARE.model.object = risk.model,
-                           number.of.percentiles = 10)
+# Not run since it can take a few minutes
+# output = ModelValidation(study.data = data, total.followup.validation = TRUE,
+#      predicted.risk.interval = NULL, iCARE.model.object = risk.model,
+#      number.of.percentiles = 10)
+output
+
 }
 

@@ -23,7 +23,7 @@ In this example, we will estimate the risk of breast cancer in ages 50-80.
 A SNP-only model is fit, with no specific genotypes supplied for estimation.
 The population disease rates are from SEER.
 <<model-1a>>=
-res_snps_miss = computeAbsoluteRisk(model.snp.info = bc_15_snps, 
+res_snps_miss = computeAbsoluteRisk(model.snp.info = bc_72_snps, 
                       model.disease.incidence.rates = bc_inc,
                       model.competing.incidence.rates = mort_inc, 
                       apply.age.start = 50, 
@@ -46,7 +46,7 @@ In this example, we will again estimate the risk of breast cancer in ages 50-80.
 This time however, three specific genotypes are supplied for estimation (with some missing data).
 The argument return.refs.risk = TRUE, includes the referent dataset risks be included in results.
 <<model 1b>>=
-res_snps_dat = computeAbsoluteRisk(model.snp.info = bc_15_snps, 
+res_snps_dat = computeAbsoluteRisk(model.snp.info = bc_72_snps, 
                                 model.disease.incidence.rates = bc_inc,
                                 model.competing.incidence.rates = mort_inc, 
                                 apply.age.start = 50, 
@@ -68,21 +68,13 @@ legend("topright", legend="New Profiles", col="red", lwd=1)
 \section*{Example 2}
 
 In this example, we will estimate the risk of breast cancer in ages 50-80 by
-fitting a model with two risk factors and 15 SNPs, with
-three specific covariate profiles supplied for estimation (with some missing data).
-First, the model.cov.info argument is created. 
+fitting a model with 13 risk factors and 72 SNPs.
 
-<<ex-2>>=
-v1 <- list(name="famhist", type="continuous")
-v2 <- list(name="parity", type="factor", levels=0:4, ref=0)
-bc_model_cov_info <- list(v1, v2)
-@
 
-Now fit the model
 <<fit-2>>=
-res_covs_snps = computeAbsoluteRisk(model.formula=caco~famhist+as.factor(parity), 
+res_covs_snps = computeAbsoluteRisk(model.formula=bc_model_formula, 
                                          model.cov.info=bc_model_cov_info,
-                                         model.snp.info=bc_15_snps,
+                                         model.snp.info=bc_72_snps,
                                          model.log.RR=bc_model_log_or,
                                          model.ref.dataset=ref_cov_dat,
                                          model.disease.incidence.rates=bc_inc,

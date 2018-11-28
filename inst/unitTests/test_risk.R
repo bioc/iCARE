@@ -1,12 +1,12 @@
 test_risk <- function() {
 
-  risks <- c(0.0814961, 0.0771146, 0.1295784)
+  risks <- c(0.10250188, 0.09017017, 0.16893543)
 
   data(bc_data, package="iCARE")
   set.seed(1)
-  results <- computeAbsoluteRisk(model.formula     = caco ~ famhist + as.factor(parity), 
+  results <- computeAbsoluteRisk(model.formula     = bc_model_formula, 
                                          model.cov.info    = bc_model_cov_info,
-                                         model.snp.info    = bc_15_snps,
+                                         model.snp.info    = bc_72_snps,
                                          model.log.RR      = bc_model_log_or,
                                          model.ref.dataset = ref_cov_dat,
                                          model.disease.incidence.rates   = bc_inc,
@@ -17,7 +17,7 @@ test_risk <- function() {
                                          apply.cov.profile  = new_cov_prof,
                                          apply.snp.profile  = new_snp_prof, 
                                          return.refs.risk   = TRUE)
-  ret <- results$risk
+  ret <- as.numeric(results$risk)
   
   
   checkEqualsNumeric(ret, risks, tolerance=1.0e-4)

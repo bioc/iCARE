@@ -23,7 +23,7 @@ library(iCARE)
 
 Load the breast cancer data and set the seed.
 <<load-data>>=
-data("bc2_data", package="iCARE")
+data("bc_data", package="iCARE")
 set.seed(50)
 @
 

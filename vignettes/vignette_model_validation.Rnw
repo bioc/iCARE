@@ -135,7 +135,8 @@ output = ModelValidation(study.data = data,
                          number.of.percentiles = 10)
 @
 \setkeys{Gin}{width=1.3\textwidth}
-We can also produce a set of useful plots showing the results of the validation analysis.
+We can also produce a set of useful plots showing the results 
+of the validation analysis.
 <<plot-model-validation, fig=TRUE, height = 12, width = 9>>=
 plotModelValidation(study.data = data,validation.results = output)
 @

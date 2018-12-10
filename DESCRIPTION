@@ -1,8 +1,8 @@
 Package: iCARE
 Title: A Tool for Individualized Coherent Absolute Risk Estimation
         (iCARE)
-Version: 1.10.2
-Date: 2018-12-05
+Version: 1.10.3
+Date: 2018-11-27
 Author: Paige Maas, Parichoy Pal Choudhury, Nilanjan Chatterjee and William Wheeler
 Description: An R package to compute Individualized Coherent Absolute Risk Estimators.
 Maintainer: Bill Wheeler <wheelerb@imsweb.com>

@@ -1,4 +1,4 @@
-%\VignetteIndexEntry{iCARE Vignette}
+%\VignetteIndexEntry{iCARE Vignette Model Validation}
 %\VignettePackage{iCARE}
 %\VigetteDepends{iCARE}
 
